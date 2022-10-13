@@ -1,0 +1,111 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <locale.h>
+int main(){
+//	*declaro as variaveis
+    int i, j, linha, coluna, jogador, gan, jogadas, vari;
+    char tabuleiro[3][3];
+    do{ 
+        jogador = 1;
+        gan = 0;
+        jogadas = 0;
+//        *aki eu preenchi minha matriz com espaço em branco
+        for(i = 0; i < 3; i++){
+            for(j = 0; j < 3; j++){
+                tabuleiro[i][j] = ' ';
+            }
+        }
+        do{ 
+        system ("cls");
+            for(i = 0; i < 3; i++){
+                for(j = 0; j < 3; j++){
+                    if(j == 0)
+                        printf("\t");//tabulação pra organizar
+                    printf(" %c ", tabuleiro[i][j]);
+                    if(j < 2)
+                        printf("|");
+                }
+                if(i < 2)
+                    printf("\n\t-----------");//outra tabulação cabulosa 
+                printf("\n");
+            }
+            //aki onde eu capto as coordendas da gameplay
+            do{
+                printf("\n player 1 = X    Player 2 = 0 \n");
+                printf("\nJOGADOR %d: Digite a linha e a coluna que deseja jogar: ", jogador);
+                scanf("%d%d", &linha, &coluna);
+            }while(linha < 0 || linha > 2 || coluna < 0 || coluna > 2 || tabuleiro[linha][coluna] != ' ');
+            if(jogador == 1){
+                tabuleiro[linha][coluna] = 'X';
+                jogador++;
+            }
+            else{
+                tabuleiro[linha][coluna] = '0';
+                jogador = 1;
+            }
+            jogadas++;
+            // condiçoes de vitorias, queria mt saber função '-'
+            if(tabuleiro[0][0] == 'X' && tabuleiro[0][1] == 'X' && tabuleiro[0][2] == 'X' ||
+               tabuleiro[1][0] == 'X' && tabuleiro[1][1] == 'X' && tabuleiro[1][2] == 'X' ||
+               tabuleiro[2][0] == 'X' && tabuleiro[2][1] == 'X' && tabuleiro[2][2] == 'X'){
+                printf("\nO player 1 venceu\n");
+                gan = 1;
+            }
+            // condiçoes de vitorias, queria mt saber função mt msm'-'
+
+            if(tabuleiro[0][0] == '0' && tabuleiro[0][1] == '0' && tabuleiro[0][2] == '0' ||
+               tabuleiro[1][0] == '0' && tabuleiro[1][1] == '0' && tabuleiro[1][2] == '0' ||
+               tabuleiro[2][0] == '0' && tabuleiro[2][1] == '0' && tabuleiro[2][2] == '0'){
+                printf("\nO player 2 \n");
+                gan = 1;
+            }            // condiçoes de vitorias, queria mt saber função '-' mt msm msm
+
+            if(tabuleiro[0][0] == 'X' && tabuleiro[1][0] == 'X' && tabuleiro[2][0] == 'X' ||
+               tabuleiro[0][1] == 'X' && tabuleiro[1][1] == 'X' && tabuleiro[2][1] == 'X' ||
+               tabuleiro[0][2] == 'X' && tabuleiro[1][2] == 'X' && tabuleiro[2][2] == 'X'){
+                printf("\nO player 1 venceu\n");
+                gan = 1;
+            }// então eu ja disse q queria saber função?
+            if(tabuleiro[0][0] == '0' && tabuleiro[1][0] == '0' && tabuleiro[2][0] == '0' ||
+               tabuleiro[0][1] == '0' && tabuleiro[1][1] == '0' && tabuleiro[2][1] == '0' ||
+               tabuleiro[0][2] == '0' && tabuleiro[1][2] == '0' && tabuleiro[2][2] == '0'){
+                printf("\nO player 2 venceu\n");
+                gan = 1;
+            }// essas foram mais rapidas pois a diagonal são menos possibilidades
+            if(tabuleiro[0][0] == 'X' && tabuleiro[1][1] == 'X' && tabuleiro[2][2] == 'X'){
+                printf("\nO player 1 venceu\n");
+                gan = 1;
+            }
+
+            if(tabuleiro[0][0] == '0' && tabuleiro[1][1] == '0' && tabuleiro[2][2] == '0'){
+                printf("O player 2 venceu \n");
+                gan = 1;
+            }
+            if(tabuleiro[0][2] == 'X' && tabuleiro[1][1] == 'X' && tabuleiro[2][0] == 'X'){
+                printf("\nO player 1 venceu\n");
+                gan = 1;
+            }
+            if(tabuleiro[0][2] == '0' && tabuleiro[1][1] == '0' && tabuleiro[2][0] == '0'){
+                printf("\nO player 2 venceu!\n");
+                gan = 1;
+            }
+        }while(gan == 0 && jogadas < 9);
+        for(i = 0; i < 3; i++){
+            for(j = 0; j < 3; j++){
+                if(j == 0)
+                    printf("\t");
+                printf(" %c ", tabuleiro[i][j]);
+                if(j < 2)
+                    printf("|");
+            }
+            if(i < 2)
+                printf("\n\t-----------");
+            printf("\n");
+        }
+        if(gan == 0)
+        printf("\njogar novamente:S-N\n");
+        scanf("%s", &vari);
+    }while(vari == 's' ||'S');
+
+    return 0;
+}
